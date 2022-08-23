@@ -1,0 +1,850 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns:ns1="http://www.plcopen.org/xml/tc6_0201" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="Sinergi Wahana Gemilang" productName="Unnamed" productVersion="1" creationDateTime="2022-08-10T22:53:50" companyURL="www.swgemilang.com"/>
+  <contentHeader name="Mixer" modificationDateTime="2022-08-15T13:40:24" author="Andi Sama">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="10" y="10"/>
+      </fbd>
+      <ld>
+        <scaling x="10" y="10"/>
+      </ld>
+      <sfc>
+        <scaling x="10" y="10"/>
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes/>
+    <pous>
+      <pou name="Mixer" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="START" address="%I0.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+            <variable name="STOP" address="%I0.1">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+            <variable name="L_LEVEL" address="%I0.2">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+            <variable name="H_LEVEL" address="%I0.3">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+            <variable name="PUMP_1" address="%Q1.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+            <variable name="PUMP_2" address="%Q2.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+            <variable name="MIXER_MOTOR" address="%Q3.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+          </localVars>
+          <localVars>
+            <variable name="PT_MIXER_MOTOR">
+              <type>
+                <UINT/>
+              </type>
+              <initialValue>
+                <simpleValue value="10"/>
+              </initialValue>
+            </variable>
+            <variable name="SR0">
+              <type>
+                <derived name="SR"/>
+              </type>
+            </variable>
+          </localVars>
+          <localVars>
+            <variable name="VALVE" address="%Q3.0">
+              <type>
+                <BOOL/>
+              </type>
+              <initialValue>
+                <simpleValue value="FALSE"/>
+              </initialValue>
+            </variable>
+          </localVars>
+          <localVars>
+            <variable name="SR1">
+              <type>
+                <derived name="SR"/>
+              </type>
+            </variable>
+            <variable name="ET_TON0">
+              <type>
+                <TIME/>
+              </type>
+            </variable>
+            <variable name="TP0">
+              <type>
+                <derived name="TP"/>
+              </type>
+            </variable>
+            <variable name="F_TRIG0">
+              <type>
+                <derived name="F_TRIG"/>
+              </type>
+            </variable>
+            <variable name="RS0">
+              <type>
+                <derived name="RS"/>
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <LD>
+            <leftPowerRail localId="1" height="410" width="10">
+              <position x="50" y="400"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="200"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="390"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="2" height="20" width="21" negated="false">
+              <position x="120" y="410"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="120" y="420"/>
+                  <position x="60" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>START</variable>
+            </contact>
+            <contact localId="3" height="20" width="21" negated="false">
+              <position x="630" y="780"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="630" y="790"/>
+                  <position x="60" y="790"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>STOP</variable>
+            </contact>
+            <block localId="4" typeName="SR" instanceName="SR0" height="380" width="130">
+              <position x="750" y="310"/>
+              <inputVariables>
+                <variable formalParameter="S1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="110"/>
+                    <connection refLocalId="49">
+                      <position x="750" y="420"/>
+                      <position x="651" y="420"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="R">
+                  <connectionPointIn>
+                    <relPosition x="0" y="290"/>
+                    <connection refLocalId="11">
+                      <position x="750" y="600"/>
+                      <position x="251" y="600"/>
+                    </connection>
+                    <connection refLocalId="3">
+                      <position x="750" y="600"/>
+                      <position x="720" y="600"/>
+                      <position x="720" y="790"/>
+                      <position x="651" y="790"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Q1">
+                  <connectionPointOut>
+                    <relPosition x="130" y="110"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <comment localId="5" height="150" width="1010">
+              <position x="20" y="120"/>
+              <content>
+                <xhtml:p><![CDATA[If STOP                             # Emergency Push button pressed
+  Turn Off PUMP_1, PUMP_2
+Else If L_LEVEL                     # L_LEVEL sensor ON
+  Turn ON PUMP_1  PUMP_2            # both PUMPs are ON, filling the fluids into the tank
+Else If H_LEVEL                     # H_LEVEL sensor ON, fluid has reached H_LEVEL sensor (full tank)
+  Turn OFF PUMP_1, PUMP_2]]></xhtml:p>
+              </content>
+            </comment>
+            <contact localId="6" height="20" width="21" negated="false">
+              <position x="230" y="410"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="2">
+                  <position x="230" y="420"/>
+                  <position x="141" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>L_LEVEL</variable>
+            </contact>
+            <coil localId="7" height="20" width="30" negated="false">
+              <position x="950" y="410"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="4" formalParameter="Q1">
+                  <position x="950" y="420"/>
+                  <position x="880" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="30" y="10"/>
+              </connectionPointOut>
+              <variable>PUMP_1</variable>
+            </coil>
+            <rightPowerRail localId="8" height="180" width="10">
+              <position x="1030" y="400"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="7">
+                  <position x="1030" y="420"/>
+                  <position x="980" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointIn>
+                <relPosition x="0" y="160"/>
+                <connection refLocalId="9">
+                  <position x="1030" y="560"/>
+                  <position x="980" y="560"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <coil localId="9" height="20" width="30" negated="false">
+              <position x="950" y="550"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="4" formalParameter="Q1">
+                  <position x="950" y="560"/>
+                  <position x="900" y="560"/>
+                  <position x="900" y="420"/>
+                  <position x="880" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="30" y="10"/>
+              </connectionPointOut>
+              <variable>PUMP_2</variable>
+            </coil>
+            <contact localId="11" height="20" width="21" negated="false">
+              <position x="230" y="590"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="230" y="600"/>
+                  <position x="60" y="600"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>H_LEVEL</variable>
+            </contact>
+            <leftPowerRail localId="12" height="330" width="10" executionOrderId="0">
+              <position x="50" y="1110"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="170"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="310"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="13" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="120" y="1120"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="12">
+                  <position x="120" y="1130"/>
+                  <position x="60" y="1130"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>START</variable>
+            </contact>
+            <contact localId="14" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="630" y="1410"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="12">
+                  <position x="630" y="1420"/>
+                  <position x="60" y="1420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>STOP</variable>
+            </contact>
+            <contact localId="16" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="230" y="1120"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="13">
+                  <position x="230" y="1130"/>
+                  <position x="141" y="1130"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>H_LEVEL</variable>
+            </contact>
+            <coil localId="17" height="20" width="30" negated="false" executionOrderId="0">
+              <position x="930" y="1120"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="15" formalParameter="Q1">
+                  <position x="930" y="1130"/>
+                  <position x="880" y="1130"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="30" y="10"/>
+              </connectionPointOut>
+              <variable>MIXER_MOTOR</variable>
+            </coil>
+            <rightPowerRail localId="18" height="40" width="10" executionOrderId="0">
+              <position x="1030" y="1110"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="17">
+                  <position x="1030" y="1130"/>
+                  <position x="960" y="1130"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <block localId="15" typeName="SR" instanceName="SR1" height="310" width="130" executionOrderId="0">
+              <position x="750" y="1040"/>
+              <inputVariables>
+                <variable formalParameter="S1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="90"/>
+                    <connection refLocalId="25">
+                      <position x="750" y="1130"/>
+                      <position x="651" y="1130"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="R">
+                  <connectionPointIn>
+                    <relPosition x="0" y="240"/>
+                    <connection refLocalId="14">
+                      <position x="750" y="1280"/>
+                      <position x="720" y="1280"/>
+                      <position x="720" y="1420"/>
+                      <position x="651" y="1420"/>
+                    </connection>
+                    <connection refLocalId="34">
+                      <position x="750" y="1280"/>
+                      <position x="251" y="1280"/>
+                    </connection>
+                    <connection refLocalId="43" formalParameter="Q">
+                      <position x="750" y="1280"/>
+                      <position x="720" y="1280"/>
+                      <position x="720" y="1200"/>
+                      <position x="670" y="1200"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Q1">
+                  <connectionPointOut>
+                    <relPosition x="130" y="90"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <comment localId="19" height="150" width="1020">
+              <position x="10" y="840"/>
+              <content>
+                <xhtml:p><![CDATA[IF STOP                              # Emergency Push button pressed
+  Turn Off MIXER_MOTOR 
+Else If H_LEVEL && NOT VALVE         # H_LEVEL sensor ON indicating tank is full, VALVE is Closed
+  Turn On MIXER_MOTOR for sometime   # mixed the two fluids, e.g. a preset time: 8 seconds here
+Else If VALVE is Open                # VALVE is open draining the mixed fluids
+  Turn Off MIXER_MOTOR]]></xhtml:p>
+              </content>
+            </comment>
+            <leftPowerRail localId="20" height="300" width="10" executionOrderId="0">
+              <position x="50" y="1760"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="150"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="280"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <contact localId="21" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="120" y="1770"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="20">
+                  <position x="120" y="1780"/>
+                  <position x="60" y="1780"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>START</variable>
+            </contact>
+            <contact localId="22" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="640" y="2030"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="20">
+                  <position x="640" y="2040"/>
+                  <position x="60" y="2040"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>STOP</variable>
+            </contact>
+            <coil localId="28" height="20" width="30" negated="false" executionOrderId="0">
+              <position x="940" y="1770"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="47" formalParameter="Q1">
+                  <position x="940" y="1780"/>
+                  <position x="890" y="1780"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="30" y="10"/>
+              </connectionPointOut>
+              <variable>VALVE</variable>
+            </coil>
+            <rightPowerRail localId="29" height="40" width="10" executionOrderId="0">
+              <position x="1030" y="1760"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="28">
+                  <position x="1030" y="1780"/>
+                  <position x="970" y="1780"/>
+                </connection>
+              </connectionPointIn>
+            </rightPowerRail>
+            <comment localId="33" height="150" width="1010">
+              <position x="20" y="1500"/>
+              <content>
+                <xhtml:p><![CDATA[If STOP                             # Emergency Push button pressed
+  Turn Off VALVE                    # Close draining VALVE
+Else If H_LEVEL && MIXER_MOTOR      # Tank is full and MIXER_MOTOR has done mixing
+  Turn On VALVE                     # Open VALVE
+Else If L_LEVEL                     # L_LEVEL triggered while draining tank and while VALVE is open
+  Turn Off VALVE                    # Close Valve]]></xhtml:p>
+              </content>
+            </comment>
+            <contact localId="34" height="20" width="21" negated="false">
+              <position x="230" y="1270"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="12">
+                  <position x="230" y="1280"/>
+                  <position x="60" y="1280"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>VALVE</variable>
+            </contact>
+            <contact localId="37" height="20" width="21" negated="false">
+              <position x="230" y="1770"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="21">
+                  <position x="230" y="1780"/>
+                  <position x="141" y="1780"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>H_LEVEL</variable>
+            </contact>
+            <contact localId="38" height="20" width="21" negated="true">
+              <position x="350" y="1770"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="37">
+                  <position x="350" y="1780"/>
+                  <position x="251" y="1780"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>MIXER_MOTOR</variable>
+            </contact>
+            <block localId="42" typeName="TP" instanceName="TP0" height="60" width="50">
+              <position x="500" y="1100"/>
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="31">
+                      <position x="500" y="1130"/>
+                      <position x="371" y="1130"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="PT">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="10">
+                      <position x="500" y="1150"/>
+                      <position x="490" y="1150"/>
+                      <position x="490" y="1200"/>
+                      <position x="470" y="1200"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Q">
+                  <connectionPointOut>
+                    <relPosition x="50" y="30"/>
+                  </connectionPointOut>
+                </variable>
+                <variable formalParameter="ET">
+                  <connectionPointOut>
+                    <relPosition x="50" y="50"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="10" height="30" width="80" negated="false" executionOrderId="0">
+              <position x="390" y="1180"/>
+              <connectionPointOut>
+                <relPosition x="80" y="20"/>
+              </connectionPointOut>
+              <expression>T#8000ms</expression>
+            </inVariable>
+            <block localId="43" typeName="F_TRIG" instanceName="F_TRIG0" height="40" width="60">
+              <position x="610" y="1170"/>
+              <inputVariables>
+                <variable formalParameter="CLK">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="42" formalParameter="Q">
+                      <position x="610" y="1200"/>
+                      <position x="580" y="1200"/>
+                      <position x="580" y="1130"/>
+                      <position x="550" y="1130"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Q">
+                  <connectionPointOut>
+                    <relPosition x="60" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <comment localId="46" height="110" width="1010">
+              <position x="20" y="0"/>
+              <content>
+                <xhtml:p><![CDATA[Andi Sama
+Sinergi Wahana Gemilang
+Created: August 12, 2022
+Modified: August 15, 2022]]></xhtml:p>
+              </content>
+            </comment>
+            <contact localId="24" height="20" width="21" negated="true" executionOrderId="0">
+              <position x="230" y="1900"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="20">
+                  <position x="230" y="1910"/>
+                  <position x="60" y="1910"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>L_LEVEL</variable>
+            </contact>
+            <block localId="47" typeName="RS" instanceName="RS0" height="270" width="130">
+              <position x="760" y="1700"/>
+              <inputVariables>
+                <variable formalParameter="S">
+                  <connectionPointIn>
+                    <relPosition x="0" y="80"/>
+                    <connection refLocalId="26">
+                      <position x="760" y="1780"/>
+                      <position x="661" y="1780"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="R1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="210"/>
+                    <connection refLocalId="22">
+                      <position x="760" y="1910"/>
+                      <position x="730" y="1910"/>
+                      <position x="730" y="2040"/>
+                      <position x="661" y="2040"/>
+                    </connection>
+                    <connection refLocalId="24">
+                      <position x="760" y="1910"/>
+                      <position x="251" y="1910"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="Q1">
+                  <connectionPointOut>
+                    <relPosition x="130" y="80"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <contact localId="48" height="20" width="21" negated="false">
+              <position x="180" y="470"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="180" y="480"/>
+                  <position x="100" y="480"/>
+                  <position x="100" y="420"/>
+                  <position x="60" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>PUMP_1</variable>
+            </contact>
+            <contact localId="23" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="180" y="530"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="180" y="540"/>
+                  <position x="100" y="540"/>
+                  <position x="100" y="420"/>
+                  <position x="60" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>PUMP_1</variable>
+            </contact>
+            <contact localId="49" height="20" width="21" negated="true">
+              <position x="630" y="410"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="30">
+                  <position x="630" y="420"/>
+                  <position x="371" y="420"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>STOP</variable>
+            </contact>
+            <contact localId="50" height="20" width="21" negated="false">
+              <position x="180" y="1190"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="12">
+                  <position x="180" y="1200"/>
+                  <position x="90" y="1200"/>
+                  <position x="90" y="1130"/>
+                  <position x="60" y="1130"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>MIXER_MOTOR</variable>
+            </contact>
+            <contact localId="25" height="20" width="21" negated="true" executionOrderId="0">
+              <position x="630" y="1120"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="42" formalParameter="Q">
+                  <position x="630" y="1130"/>
+                  <position x="550" y="1130"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>STOP</variable>
+            </contact>
+            <contact localId="26" height="20" width="21" negated="true" executionOrderId="0">
+              <position x="640" y="1770"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="38">
+                  <position x="640" y="1780"/>
+                  <position x="371" y="1780"/>
+                </connection>
+                <connection refLocalId="27">
+                  <position x="640" y="1780"/>
+                  <position x="400" y="1780"/>
+                  <position x="400" y="1840"/>
+                  <position x="251" y="1840"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>STOP</variable>
+            </contact>
+            <contact localId="27" height="20" width="21" negated="false" executionOrderId="0">
+              <position x="230" y="1830"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="20">
+                  <position x="230" y="1840"/>
+                  <position x="100" y="1840"/>
+                  <position x="100" y="1780"/>
+                  <position x="60" y="1780"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>VALVE</variable>
+            </contact>
+            <contact localId="30" height="20" width="21" negated="true" executionOrderId="0">
+              <position x="350" y="410"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="6">
+                  <position x="350" y="420"/>
+                  <position x="251" y="420"/>
+                </connection>
+                <connection refLocalId="48">
+                  <position x="350" y="420"/>
+                  <position x="300" y="420"/>
+                  <position x="300" y="480"/>
+                  <position x="201" y="480"/>
+                </connection>
+                <connection refLocalId="23">
+                  <position x="350" y="420"/>
+                  <position x="300" y="420"/>
+                  <position x="300" y="540"/>
+                  <position x="201" y="540"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>H_LEVEL</variable>
+            </contact>
+            <contact localId="31" height="20" width="21" negated="true" executionOrderId="0">
+              <position x="350" y="1120"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="16">
+                  <position x="350" y="1130"/>
+                  <position x="251" y="1130"/>
+                </connection>
+                <connection refLocalId="50">
+                  <position x="350" y="1130"/>
+                  <position x="300" y="1130"/>
+                  <position x="300" y="1200"/>
+                  <position x="201" y="1200"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>VALVE</variable>
+            </contact>
+          </LD>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="Config0">
+        <resource name="Res0">
+          <task name="task0" priority="0" interval="T#20ms">
+            <pouInstance name="instance0" typeName="Mixer"/>
+          </task>
+        </resource>
+      </configuration>
+    </configurations>
+  </instances>
+</project>
